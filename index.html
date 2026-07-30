@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="IELTS Quest - nền tảng học tiếng Anh A1 đến IELTS 8.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' data:; media-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests">
+  <title>IELTS Quest</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="IELTS Quest">
+      <span class="logo">IQ</span>
+      <span>IELTS Quest</span>
+    </a>
+    <button id="menuBtn" class="menu-btn" aria-label="Mở menu" aria-expanded="false">☰</button>
+    <nav id="mainNav" class="nav">
+      <a href="#home">Trang chủ</a>
+      <a href="#roadmap">Lộ trình</a>
+      <a href="#vocabulary">Từ vựng</a>
+      <a href="#skills">4 kỹ năng</a>
+      <a href="#tests">Bài kiểm tra</a>
+      <a href="#progress">Tiến độ</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero section">
+      <div>
+        <p class="eyebrow">A1 → IELTS 8.0</p>
+        <h1>Học tiếng Anh mỗi ngày bằng bài học thật</h1>
+        <p class="lead">Mỗi ngày có từ vựng, nghe, nói, đọc, viết và bài kiểm tra mới. Tiến độ được lưu ngay trên thiết bị của bạn.</p>
+        <div class="hero-actions">
+          <button class="primary" data-open="todayLesson">Bắt đầu bài hôm nay</button>
+          <a class="secondary" href="#roadmap">Xem lộ trình</a>
+        </div>
+        <div class="streak">
+          <span>🔥 Chuỗi học:</span>
+          <strong id="streakCount">0 ngày</strong>
+        </div>
+      </div>
+      <aside class="today-card">
+        <p class="eyebrow">Nhiệm vụ hôm nay</p>
+        <h2 id="todayTitle">Đang tải…</h2>
+        <ul id="todayTasks"></ul>
+        <button class="primary full" data-open="todayLesson">Mở bài học</button>
+      </aside>
+    </section>
+
+    <section id="roadmap" class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Lộ trình cá nhân</p>
+          <h2>12 chặng học từ căn bản đến IELTS</h2>
+        </div>
+      </div>
+      <div id="roadmapGrid" class="grid cards-3"></div>
+    </section>
+
+    <section id="vocabulary" class="section alt">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Kho từ vựng</p>
+          <h2>Học theo chủ đề, có phát âm và kiểm tra nhanh</h2>
+        </div>
+        <select id="topicSelect" aria-label="Chọn chủ đề"></select>
+      </div>
+      <div id="flashcard" class="flashcard" tabindex="0" role="button" aria-label="Lật thẻ từ">
+        <div>
+          <span id="wordLevel" class="badge"></span>
+          <h3 id="wordText"></h3>
+          <p id="wordPhonetic"></p>
+          <p id="wordMeaning" class="hidden-answer"></p>
+          <p id="wordExample" class="hidden-answer example"></p>
+        </div>
+      </div>
+      <div class="flash-actions">
+        <button id="speakWord" class="secondary">🔊 Nghe phát âm</button>
+        <button id="revealWord" class="secondary">Hiện nghĩa</button>
+        <button id="nextWord" class="primary">Từ tiếp theo</button>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">4 kỹ năng</p>
+          <h2>Bài tập có thể mở và làm ngay</h2>
+        </div>
+      </div>
+      <div id="skillGrid" class="grid cards-4"></div>
+    </section>
+
+    <section id="tests" class="section alt">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Bài kiểm tra hôm nay</p>
+          <h2>10 câu thay đổi theo ngày</h2>
+        </div>
+      </div>
+      <div id="quizBox" class="quiz-box"></div>
+    </section>
+
+    <section id="progress" class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Tiến độ</p>
+          <h2>Theo dõi quá trình học</h2>
+        </div>
+      </div>
+      <div class="stats">
+        <article><strong id="completedCount">0</strong><span>Bài đã hoàn thành</span></article>
+        <article><strong id="wordsCount">0</strong><span>Từ đã xem</span></article>
+        <article><strong id="bestScore">0%</strong><span>Điểm cao nhất</span></article>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Tiến độ tuần</span><span id="weekProgressText">0/7 ngày</span></div>
+        <div class="progress-bar"><div id="weekProgressBar"></div></div>
+      </div>
+      <button id="resetProgress" class="danger">Xóa tiến độ trên thiết bị</button>
+    </section>
+  </main>
+
+  <dialog id="lessonDialog">
+    <form method="dialog" class="dialog-shell">
+      <div class="dialog-head">
+        <div>
+          <p class="eyebrow">Bài học tương tác</p>
+          <h2 id="dialogTitle">Bài học</h2>
+        </div>
+        <button class="icon-btn" value="cancel" aria-label="Đóng">✕</button>
+      </div>
+      <div id="dialogContent"></div>
+      <div class="dialog-actions">
+        <button id="completeLesson" type="button" class="primary">Đánh dấu hoàn thành</button>
+        <button value="cancel" class="secondary">Đóng</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer>
+    <p>IELTS Quest v1 — dữ liệu học được lưu bằng localStorage trên trình duyệt.</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
